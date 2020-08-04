@@ -3,25 +3,20 @@ package org.example.tankwar;
 import java.awt.Graphics;
 import java.awt.Image;
 
-import javax.swing.ImageIcon;
+public class Wall extends GameObject {
 
-public class Wall {
-	private int x;
-	private int y;
-	// 水平或垂直
-	private boolean horizontal;
-	private int bricks;
-	
-	private Image image;
-	Wall(int x, int y, boolean horizontal, int bricks) {
-		this.x = x;
-		this.y = y;
+	protected boolean horizontal;
+	protected int bricks;
+	//protected Image image;
+
+	Wall(int x, int y, boolean horizontal, int bricks, Image image) {
+		super(x, y, image);
 		this.horizontal = horizontal;
 		this.bricks = bricks;
 
-		image = new ImageIcon("assets/images/brick.png").getImage();
 	}
 
+	@Override
 	public void draw(Graphics g) {
 		if (horizontal) {
 			for (int i = 0; i < bricks; i++) {

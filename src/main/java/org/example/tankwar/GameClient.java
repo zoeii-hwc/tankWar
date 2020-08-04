@@ -2,6 +2,7 @@ package org.example.tankwar;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,15 +43,16 @@ public class GameClient extends JComponent {
 	}
 
 	public void init() {
-		playerTank = new Tank(400, 100, Direction.DOWN);
+		playerTank = new Tank(450, 100, Direction.DOWN);
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 4; j++) {
-				enemyTanks.add(new Tank(350 + j * 80, 500 + 80 * i, Direction.UP, true));// 敵方坦克
+				enemyTanks.add(new Tank(350 + j * 80, 400 + 80 * i, Direction.UP, true));// 敵方坦克
 			}
 		}
-		walls.add(new Wall(250, 150, true, 15));
-		walls.add(new Wall(150, 200, true, 15));
-		walls.add(new Wall(800, 200, true, 15));
+		Image image = Tools.getImage("brick.png");
+		walls.add(new Wall(250, 150, true, 15,image));
+		walls.add(new Wall(150, 200, false, 15,image));//false是縱向
+		walls.add(new Wall(800, 200, false, 15,image));
 	}
 
 	public int getScreenWidth() {
