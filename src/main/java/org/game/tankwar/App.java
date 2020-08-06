@@ -1,4 +1,4 @@
-package org.example.tankwar;
+package org.game.tankwar;
 
 /**
  * Hello world!

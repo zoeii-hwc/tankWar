@@ -1,4 +1,4 @@
-package org.example.tankwar;
+package org.game.tankwar;
 //會自動編碼分別是0,1,2,3
 public enum Direction {
 	UP,

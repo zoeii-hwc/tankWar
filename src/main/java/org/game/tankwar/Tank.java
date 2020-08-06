@@ -1,4 +1,4 @@
-package org.example.tankwar;
+package org.game.tankwar;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -8,21 +8,22 @@ import javax.swing.ImageIcon;
 /*
  * 坦克物件
  */
-public class Tank {
-	private int x;
-	private int y;
+public class Tank extends GameObject {
+//	private int x;
+//	private int y;
 	private int speed;
-
-	Direction direction;
-	private boolean enemy; //敵方坦克
+	private Direction direction;
+	private boolean[] dirs = new boolean[4];
+	private boolean enemy; // 敵方坦克
 
 	// 維持我方坦克
-	public Tank(int x, int y, Direction direction) {
-		this(x, y, direction, false);
+	public Tank(int x, int y, Direction direction, Image[] iTankImage) {
+		this(x, y, direction, false, iTankImage);
 	}
 
 	// 產生敵方坦克
-	public Tank(int x, int y, Direction direction, boolean enemy) {
+	public Tank(int x, int y, Direction direction, boolean enemy, Image[] image) {
+		super(x,y,image);
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
@@ -30,21 +31,21 @@ public class Tank {
 		this.enemy = enemy;
 	}
 
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
+//	public int getX() {
+//		return x;
+//	}
+//
+//	public void setX(int x) {
+//		this.x = x;
+//	}
+//
+//	public int getY() {
+//		return y;
+//	}
+//
+//	public void setY(int y) {
+//		this.y = y;
+//	}
 
 	public Direction getDirection() {
 		return direction;
@@ -111,36 +112,34 @@ public class Tank {
 		}
 	}
 
-	private boolean[] dirs = new boolean[4];
-
 	public Image getImage() {
 
 		String name = enemy ? "etank" : "itank";// 更改敵方坦克顯示
 
 		if (direction == Direction.UP) {
-			return new ImageIcon("assets\\images\\"+name+"U.png").getImage();
+			return new ImageIcon("assets\\images\\" + name + "U.png").getImage();
 		}
 		if (direction == Direction.DOWN) {
-			return new ImageIcon("assets\\images\\"+name+"D.png").getImage();
+			return new ImageIcon("assets\\images\\" + name + "D.png").getImage();
 		}
 		if (direction == Direction.LEFT) {
-			return new ImageIcon("assets\\images\\"+name+"L.png").getImage();
+			return new ImageIcon("assets\\images\\" + name + "L.png").getImage();
 		}
 		if (direction == Direction.RIGHT) {
-			return new ImageIcon("assets\\images\\"+name+"R.png").getImage();
+			return new ImageIcon("assets\\images\\" + name + "R.png").getImage();
 		}
 //		---
 		if (direction == Direction.UP_LEFT) {
-			return new ImageIcon("assets\\images\\"+name+"LU.png").getImage();
+			return new ImageIcon("assets\\images\\" + name + "LU.png").getImage();
 		}
 		if (direction == Direction.UP_RIGHT) {
-			return new ImageIcon("assets\\images\\"+name+"RU.png").getImage();
+			return new ImageIcon("assets\\images\\" + name + "RU.png").getImage();
 		}
 		if (direction == Direction.DOWN_RIGHT) {
-			return new ImageIcon("assets\\images\\"+name+"RD.png").getImage();
+			return new ImageIcon("assets\\images\\" + name + "RD.png").getImage();
 		}
 		if (direction == Direction.DOWN_LEFT) {
-			return new ImageIcon("assets\\images\\"+name+"LD.png").getImage();
+			return new ImageIcon("assets\\images\\" + name + "LD.png").getImage();
 		}
 		return null;
 	}
