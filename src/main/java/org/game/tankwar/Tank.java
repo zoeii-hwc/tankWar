@@ -23,29 +23,13 @@ public class Tank extends GameObject {
 
 	// 產生敵方坦克
 	public Tank(int x, int y, Direction direction, boolean enemy, Image[] image) {
-		super(x,y,image);
+		super(x, y, image);
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
 		speed = 5;
 		this.enemy = enemy;
 	}
-
-//	public int getX() {
-//		return x;
-//	}
-//
-//	public void setX(int x) {
-//		this.x = x;
-//	}
-//
-//	public int getY() {
-//		return y;
-//	}
-//
-//	public void setY(int y) {
-//		this.y = y;
-//	}
 
 	public Direction getDirection() {
 		return direction;
@@ -72,6 +56,8 @@ public class Tank extends GameObject {
 	}
 
 	public void move() {
+		oldX = x;
+		oldY = y;
 		switch (direction) {
 		case UP:
 			y -= speed;
@@ -88,6 +74,42 @@ public class Tank extends GameObject {
 
 		default:
 			break;
+		}
+///////////////////question
+//		if (x < 0) {
+//			x = 0;
+//		} else if (x > TankWar.gameClient.getWidth() - width) {
+//			x = TankWar.gameClient.getWidth() - width;
+//		}
+//
+//		if (y < 0) {
+//			y = 0;
+//		} else if (y > TankWar.gameClient.getHeight() - height) {
+//			y = TankWar.gameClient.getHeight() - height;
+//		}
+	}
+
+	public void collision() {
+		if (x < 0) {
+			x = 0;
+		} else if (x > TankWar.gameClient.getWidth() - width) {
+			x = TankWar.gameClient.getWidth() - width;
+		}
+
+		if (y < 0) {
+			y = 0;
+		} else if (y > TankWar.gameClient.getHeight() - height) {
+			y = TankWar.gameClient.getHeight() - height;
+		}
+		for (GameObject object : TankWar.gameClient.getGameObjects()) {
+			if (object != this) {
+				if (object.getRectangle().intersects(this.getRectangle())) {
+					System.out.println("1");
+					x = oldX;
+					y = oldY;
+					return;
+				}
+			}
 		}
 	}
 
@@ -148,6 +170,7 @@ public class Tank extends GameObject {
 		if (!isStop()) {
 			determinDirection();
 			move();
+			collision();
 		}
 		g.drawImage(getImage(), x, y, null);
 	}

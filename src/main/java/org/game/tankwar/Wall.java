@@ -2,12 +2,13 @@ package org.game.tankwar;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 
 public class Wall extends GameObject {
 
 	protected boolean horizontal;
 	protected int bricks;
-	//protected Image image;
+	// protected Image image;
 
 	Wall(int x, int y, boolean horizontal, int bricks, Image[] image) {
 		super(x, y, image);
@@ -31,4 +32,10 @@ public class Wall extends GameObject {
 			}
 		}
 	}
+
+	@Override
+		public Rectangle getRectangle() {
+			return horizontal?new Rectangle(x,y,bricks*width,height):new Rectangle(x,y, width,bricks*height);
+			
+		}
 }

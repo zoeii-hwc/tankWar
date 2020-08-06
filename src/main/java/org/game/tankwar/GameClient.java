@@ -17,14 +17,18 @@ public class GameClient extends JComponent {
 
 	private Tank playerTank;// 玩家坦克
 	private boolean stop;
+//	private List<GameObject>gameObjects=new ArrayList<>();///
 	private List<GameObject>objects=new ArrayList<>();///
-	private List<Tank> enemyTanks = new ArrayList<>();// 敵方坦克
-	private List<Wall> walls = new ArrayList<>();// 方塊
+//	private List<Tank> enemyTanks = new ArrayList<>();// 敵方坦克
+//	private List<Wall> walls = new ArrayList<>();// 方塊
 	
 	
 	
 	GameClient() {
 		this(800, 600);
+	}
+	public List<GameObject> getGameObjects(){
+		return objects;
 	}
 
 	public GameClient(int screenWidth, int screenHeight) {
@@ -58,22 +62,17 @@ public class GameClient extends JComponent {
 		}
 		playerTank=new Tank(500,100,Direction.DOWN,iTankImage);
 		objects.add(playerTank);
+//		gameObjects.add(playerTank);
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 4; j++) {
 				objects.add(new Tank(350 + j * 80, 400 + 80 * i, Direction.UP, true,eTankImage));// 敵方坦克
 			}
 		}
-//		Image image = Tools.getImage("brick.png");
+
 		objects.add(new Wall(250, 150, true, 15,brickImages));
 		objects.add(new Wall(150, 200, false, 15,brickImages));//false是縱向
 		objects.add(new Wall(800, 200, false, 15,brickImages));
-//		
-//		objects.add(playerTank);
-//		objects.addAll((Collection<GameObject>)walls);
-//		objects.addAll((Collection<GameObject>)enemyTanks);
-//		for(GameObject object:objects) {
-//			object.draw(g);
-//		}
+
 	}
 
 	public int getScreenWidth() {
@@ -88,7 +87,7 @@ public class GameClient extends JComponent {
 	public void paintComponent(Graphics g) {
 //		g.drawImage(new ImageIcon("assets\\images\\itankD.png").getImage(), getCenterPosX(47), getCenterPosY(47), null);
 //		g.drawImage(playerTank.getImage(),playerTank.getX(),playerTank.getY(),null);
-//		playerTank.draw(g);
+		playerTank.draw(g);
 //		for (Tank tank : enemyTanks) {
 //			tank.draw(g);
 //		}
@@ -103,7 +102,6 @@ public class GameClient extends JComponent {
 
 	public void keyPressed(KeyEvent e) {
 		boolean[] dirs = playerTank.getDirs();
-		System.out.println(playerTank.getDirs() == dirs);// 測試
 
 		switch (e.getKeyCode()) {
 
@@ -142,6 +140,5 @@ public class GameClient extends JComponent {
 			break;
 		default:
 		}
-//		playerTank.move();
 	}
 }
