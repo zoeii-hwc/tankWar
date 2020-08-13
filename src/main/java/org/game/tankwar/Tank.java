@@ -9,12 +9,11 @@ import javax.swing.ImageIcon;
  * 坦克物件
  */
 public class Tank extends GameObject {
-//	private int x;
-//	private int y;
-	private int speed;
-	private Direction direction;
-	private boolean[] dirs = new boolean[4];
-	private boolean enemy; // 敵方坦克
+	protected int speed;
+	protected Direction direction;
+	//上下左右
+	protected boolean[] dirs = new boolean[4];
+	protected boolean enemy; // 敵方坦克
 
 	// 維持我方坦克
 	public Tank(int x, int y, Direction direction, Image[] iTankImage) {
@@ -27,17 +26,10 @@ public class Tank extends GameObject {
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
-		speed = 5;
+		speed = 10;
 		this.enemy = enemy;
 	}
 
-	public Direction getDirection() {
-		return direction;
-	}
-
-	public void setDirection(Direction direction) {
-		this.direction = direction;
-	}
 
 	public int getSpeed() {
 		return speed;
@@ -75,36 +67,37 @@ public class Tank extends GameObject {
 		default:
 			break;
 		}
-///////////////////question
-//		if (x < 0) {
-//			x = 0;
-//		} else if (x > TankWar.gameClient.getWidth() - width) {
-//			x = TankWar.gameClient.getWidth() - width;
-//		}
-//
-//		if (y < 0) {
-//			y = 0;
-//		} else if (y > TankWar.gameClient.getHeight() - height) {
-//			y = TankWar.gameClient.getHeight() - height;
-//		}
 	}
 
-	public void collision() {
+	public void fire() {
+		Bullet bullet = new Bullet(x, y, direction, enemy, GameClient.bulletImage);
+		TankWar.gameClient.addGameObject(bullet);
+	}
+
+	public boolean collisionBound() {
+		boolean collision = false;
 		if (x < 0) {
 			x = 0;
+			collision = true;
 		} else if (x > TankWar.gameClient.getWidth() - width) {
 			x = TankWar.gameClient.getWidth() - width;
+			collision = true;
 		}
 
 		if (y < 0) {
 			y = 0;
 		} else if (y > TankWar.gameClient.getHeight() - height) {
 			y = TankWar.gameClient.getHeight() - height;
+			collision = true;
 		}
+		return collision;
+	}
+
+	public void collision() {
+		collisionBound();
 		for (GameObject object : TankWar.gameClient.getGameObjects()) {
 			if (object != this) {
 				if (object.getRectangle().intersects(this.getRectangle())) {
-					System.out.println("1");
 					x = oldX;
 					y = oldY;
 					return;
@@ -167,15 +160,18 @@ public class Tank extends GameObject {
 	}
 
 	public void draw(Graphics g) {
+		if (!alive) {
+			return;
+		}
 		if (!isStop()) {
 			determinDirection();
 			move();
 			collision();
 		}
-		g.drawImage(getImage(), x, y, null);
+		g.drawImage(image[direction.ordinal()], x, y, null);
 	}
 
-	public boolean isStop() {
+	private boolean isStop() {
 		for (boolean dir : dirs) {
 			if (dir) {
 				return false;
